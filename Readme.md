@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг»
 
 * Студент: [Софья Ильина](https://up.htmlacademy.ru/javascript/27/user/1747261).
-* Наставник: `Неизвестно`.
+* Наставник: [Дмитрий (sench) Железцов](https://htmlacademy.ru/profile/sench).
 
 ---
 
