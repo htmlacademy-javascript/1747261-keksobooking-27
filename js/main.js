@@ -1,4 +1,4 @@
-const getRandom = function(min,max,precision) {
+const getRandomInteger = (min,max,precision) => {
   if (min < 0 || max < 0 || precision < 0 || min > max) {
     return NaN;
   }
@@ -12,4 +12,4 @@ const getRandom = function(min,max,precision) {
   return random.toFixed(precision);
 };
 
-getRandom(2,3,2);
+getRandomInteger(2,3,2);
