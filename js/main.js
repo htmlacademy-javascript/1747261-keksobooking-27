@@ -1,9 +1,3 @@
-const TYPE_HOUSING = ['palace', 'flat', 'house', 'bungalow', 'hotel'];
-const CHECK_TIME = ['12:00', '13:00', '14:00'];
-const FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
-const PHOTOS = ['https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/duonguyen-8LrGtIxxa4w.jpg', 'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/brandon-hoogenboom-SNxQGWxZQi0.jpg', 'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg'];
-const SIMILAR_AD_COUNT = 10;
-
 const getRandomPositiveInteger = (a, b) => {
   if (a < 0 || b < 0) {
     return NaN;
@@ -41,18 +35,28 @@ const getRandomArray = (array) => {
   return Array.from(new Set(randomArray));
 };
 
-const createAutor = () => ({
+const TYPE_HOUSING = ['palace', 'flat', 'house', 'bungalow', 'hotel'];
+const CHECK_TIME = ['12:00', '13:00', '14:00'];
+const FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
+const PHOTOS = ['https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/duonguyen-8LrGtIxxa4w.jpg', 'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/brandon-hoogenboom-SNxQGWxZQi0.jpg', 'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg'];
+const SIMILAR_AD_COUNT = 10;
+const LAT_ADDRESS = getRandomPositiveFloat(35.65, 35.7, 5);
+const LNG_ADDRESS = getRandomPositiveFloat(139.7, 139.8, 5);
+const LAT_LOCATION = getRandomPositiveFloat(35.65, 35.7, 5);
+const LNG_LOCATION = getRandomPositiveFloat(139.7, 139.8, 5);
+
+const createAuthor = () => ({
   avatar: `img/avatars/user${formatNumber(getRandomPositiveInteger(1,10))}.png`,
 });
 
 const createLocation = () => ({
-  lat: getRandomPositiveFloat(35.65, 35.7, 5),
-  lng: getRandomPositiveFloat(139.7, 139.8, 5),
+  lat: LAT_LOCATION,
+  lng: LNG_LOCATION,
 });
 
 const createOffer = () => ({
   title: 'Шикарный лофт в центре Петербурга',
-  address: `${createLocation().lat}, ${createLocation().lng}`,
+  address: `${LAT_ADDRESS}, ${LNG_ADDRESS}`,
   price: getRandomPositiveInteger(1,100000),
   type: getRandomArrayElement(TYPE_HOUSING),
   rooms: getRandomPositiveInteger(1,4),
@@ -65,7 +69,7 @@ const createOffer = () => ({
 });
 
 const createAd = () => ({
-  autor: createAutor(),
+  author: createAuthor(),
   location: createLocation(),
   offer: createOffer(),
 });
