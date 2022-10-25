@@ -45,4 +45,4 @@ const getSimilarAdNear = () => {
 
 getSimilarAdNear();
 
-export {getSimilarAdNear};
+export {getSimilarAdNear,createAd};
