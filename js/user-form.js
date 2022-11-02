@@ -1,3 +1,19 @@
+const CAPACITY_NOT_FOR_GUESTS = '0';
+const ROOM_FOR_ONE_GUEST = '1';
+const ROOMS_OPTION = {
+  '1': ['1'],
+  '2': ['2','1'],
+  '3': ['3','2','1'],
+  '100': ['0']
+};
+const TYPE_OPTION = {
+  bungalow: '0',
+  flat: '1000',
+  hotel: '3000',
+  house: '5000',
+  palace: '10000'
+};
+
 const adForm = document.querySelector('.ad-form');
 
 const pristine = new Pristine(
@@ -10,18 +26,9 @@ const pristine = new Pristine(
 
 const roomsField = adForm.querySelector('[name="rooms"]');
 const capacityField = adForm.querySelector('[name="capacity"]');
-const roomsOption = {
-  '1': ['1'],
-  '2': ['2','1'],
-  '3': ['3','2','1'],
-  '100': ['0']
-};
-
-const CAPACITY_NOT_FOR_GUESTS = '0';
-const ROOM_FOR_ONE_GUEST = '1';
 
 const validateCapacity = () =>
-  roomsOption[roomsField.value].includes(capacityField.value);
+  ROOMS_OPTION[roomsField.value].includes(capacityField.value);
 
 const getCapacityErrorMessage = () => {
   if (capacityField.value === CAPACITY_NOT_FOR_GUESTS) {
@@ -48,26 +55,41 @@ pristine.addValidator(capacityField,validateCapacity,getCapacityErrorMessage);
 capacityField.addEventListener('change', onCapacityChange);
 roomsField.addEventListener('change', onRoomsChange);
 
-const typeOption = {
-  bungalow: '0',
-  flat: '1000',
-  hotel: '3000',
-  house: '5000',
-  palace: '10000'
-};
-
 const priceField = adForm.querySelector('[name="price"]');
 const typeField = adForm.querySelector('[name="type"]');
+const sliderElement = adForm.querySelector('.ad-form__slider');
+
+noUiSlider.create(sliderElement, {
+  range: {
+    min: 0,
+    max: 100000,
+  },
+  start: 0,
+  step: 1,
+  connect: 'lower',
+  format: {
+    to: function (value) {
+      return value.toFixed(0);
+    },
+    from: function (value) {
+      return parseFloat(value);
+    },
+  },
+});
+
+sliderElement.noUiSlider.on('update', () => {
+  priceField.value = sliderElement.noUiSlider.get();
+});
 
 const validatePrice = () =>
-  +typeOption[typeField.value] < +priceField.value;
+  +TYPE_OPTION[typeField.value] < +priceField.value;
 
 const getPriceErrorMessage = () =>
-  `Минимальная цена ${typeOption[typeField.value]}`;
+  `Минимальная цена ${TYPE_OPTION[typeField.value]}`;
 
 const onTypeChange = () => {
-  priceField.placeholder = typeOption[typeField.value];
-  priceField.min = typeOption[typeField.value];
+  priceField.placeholder = TYPE_OPTION[typeField.value];
+  priceField.min = TYPE_OPTION[typeField.value];
   pristine.validate(priceField);
 };
 

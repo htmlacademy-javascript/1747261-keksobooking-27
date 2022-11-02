@@ -7,16 +7,16 @@ const PHOTOS = ['https://assets.htmlacademy.ru/content/intensive/javascript-1/ke
 const SIMILAR_AD_COUNT = 10;
 const LAT_ADDRESS = getRandomPositiveFloat(35.65, 35.7, 5);
 const LNG_ADDRESS = getRandomPositiveFloat(139.7, 139.8, 5);
-const LAT_LOCATION = getRandomPositiveFloat(35.65, 35.7, 5);
-const LNG_LOCATION = getRandomPositiveFloat(139.7, 139.8, 5);
+const LAT_LOCATION = () => getRandomPositiveFloat(35.65, 35.7, 5);
+const LNG_LOCATION = () => getRandomPositiveFloat(139.7, 139.8, 5);
 
 const createAuthor = () => ({
   avatar: `img/avatars/user${formatNumber(getRandomPositiveInteger(1,10))}.png`,
 });
 
 const createLocation = () => ({
-  lat: LAT_LOCATION,
-  lng: LNG_LOCATION,
+  lat: LAT_LOCATION(),
+  lng: LNG_LOCATION(),
 });
 
 const createOffer = () => ({
@@ -39,10 +39,6 @@ const createAd = () => ({
   offer: createOffer(),
 });
 
-const getSimilarAdNear = () => {
-  Array.from({length: SIMILAR_AD_COUNT}, createAd);
-};
-
-getSimilarAdNear();
+const getSimilarAdNear = Array.from({length: SIMILAR_AD_COUNT}, createLocation);
 
 export {getSimilarAdNear,createAd};

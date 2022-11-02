@@ -1,5 +1,13 @@
+const ADDRESS_ROUNDING = 5;
+
 const adForm = document.querySelector('.ad-form');
 const mapFilters = document.querySelector('.map__filters');
+const addressField = adForm.querySelector('#address');
+
+const getAddressLatLng = (latLng) => {
+  addressField.value = `${(latLng.lat).toFixed(ADDRESS_ROUNDING)}, ${(latLng.lng).toFixed(ADDRESS_ROUNDING)}`;
+  addressField.readOnly = true;
+};
 
 const disabledForm = () => {
   adForm.classList.add('ad-form--disabled');
@@ -25,4 +33,4 @@ const abledForm = () => {
   }
 };
 
-export {disabledForm,abledForm};
+export {disabledForm,abledForm,getAddressLatLng};

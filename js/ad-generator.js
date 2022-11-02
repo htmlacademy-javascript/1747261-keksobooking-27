@@ -1,5 +1,3 @@
-const similarAdNearTemplate = document.querySelector('#card').content.querySelector('.popup');
-const adNear = similarAdNearTemplate.cloneNode(true);
 const TYPE_HOUSING_LABEL = {
   flat: 'Квартира',
   bungalow: 'Бунгало',
@@ -7,6 +5,9 @@ const TYPE_HOUSING_LABEL = {
   palace: 'Двоерц',
   hotel: 'Отель',
 };
+
+const similarAdNearTemplate = document.querySelector('#card').content.querySelector('.popup');
+const adNear = similarAdNearTemplate.cloneNode(true);
 
 const renderAvatar = (avatar) => {
   if (avatar) {
