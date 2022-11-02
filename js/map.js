@@ -2,13 +2,14 @@ import {disabledForm,abledForm,getAddressLatLng} from './form.js';
 import {getSimilarAdNear,createAd} from './data.js';
 import {renderAdNear} from './ad-generator.js';
 
-disabledForm();
-
 const CENTER_TOKYO = {
   lat: 35.69034,
   lng: 139.75175,
 };
 
+const addressField = document.querySelector('#address');
+addressField.value = `${CENTER_TOKYO.lat},${CENTER_TOKYO.lng}`;
+disabledForm();
 
 const map = L.map('map-canvas')
   .on('load', () => abledForm())
@@ -53,7 +54,6 @@ getSimilarAdNear.forEach((ad) => {
   createMarker(ad);
 });
 
-// markerGroup.clearLayers();
 const mainPinMarker = L.marker(CENTER_TOKYO, {
   draggable: true,
   icon: mainPinIcon,
