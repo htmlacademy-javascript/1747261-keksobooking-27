@@ -1,38 +1,25 @@
-const getRandomPositiveInteger = (a, b) => {
-  if (a < 0 || b < 0) {
-    return NaN;
-  }
-  const lower = Math.ceil(Math.min(a, b));
-  const upper = Math.floor(Math.max(a, b));
-  return Math.floor(Math.random() * (upper - lower + 1) + lower);
+const ALERT_SHOW_TIME = 5000;
+
+const isEscEvent = (evt) => evt.key === 'Escape';
+const showAlert = (message) => {
+  const alertContainer = document.createElement('div');
+  alertContainer.style.zIndex = '100';
+  alertContainer.style.position = 'absolute';
+  alertContainer.style.left = '0';
+  alertContainer.style.top = '0';
+  alertContainer.style.right = '0';
+  alertContainer.style.padding = '10px 3px';
+  alertContainer.style.fontSize = '30px';
+  alertContainer.style.textAlign = 'center';
+  alertContainer.style.backgroundColor = 'red';
+
+  alertContainer.textContent = message;
+
+  document.body.append(alertContainer);
+
+  setTimeout(() => {
+    alertContainer.remove();
+  }, ALERT_SHOW_TIME);
 };
 
-const getRandomPositiveFloat = (a,b,precision) => {
-  if (a < 0 || b < 0 || precision < 0) {
-    return NaN;
-  }
-  if (a === b) {
-    return a.toFixed(precision);
-  }
-  const lower = Math.min(a, b);
-  const upper = Math.max(a, b);
-  let random = upper + 1;
-  while (random > upper) {
-    random = Math.random() * (upper - lower + 1) + lower;
-  }
-  return random.toFixed(precision);
-};
-
-const getRandomArrayElement = (elements) => elements[getRandomPositiveInteger(0, elements.length - 1)];
-
-const getRandomArray = (array) => {
-  const randomArray = [];
-  while (randomArray.length <= getRandomPositiveInteger(1,array.length)) {
-    randomArray.push(getRandomArrayElement(array));
-  }
-  return Array.from(new Set(randomArray));
-};
-
-const formatNumber = (input) => (input < 10 ? `0${input}` : input);
-
-export {getRandomPositiveInteger,getRandomPositiveFloat,getRandomArrayElement,getRandomArray,formatNumber};
+export {isEscEvent,showAlert};
