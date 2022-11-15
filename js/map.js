@@ -1,11 +1,11 @@
 import {disabledForm,abledForm,getAddressLatLng} from './form.js';
-import {getSimilarAdNear,createAd} from './data.js';
 import {renderAdNear} from './ad-generator.js';
 
 const CENTER_TOKYO = {
   lat: 35.69034,
   lng: 139.75175,
 };
+const SIMILAR_AD_COUNT = 10;
 
 const addressField = document.querySelector('#address');
 addressField.value = `${CENTER_TOKYO.lat},${CENTER_TOKYO.lng}`;
@@ -28,31 +28,27 @@ const mainPinIcon = L.icon ({
   iconAnchor: [26,52],
 });
 
-const adPinIcon = L.icon ({
-  iconUrl: '../img/pin.svg',
-  iconSize: [40,40],
-  iconAnchor: [20,40],
-});
-
 const markerGroup = L.layerGroup().addTo(map);
 
-const createMarker = (ad) => {
-  const {lat, lng} = ad;
-  const marker = L.marker({
-    lat,
-    lng,
-  },
-  {
-    icon: adPinIcon,
-  }
+const createMarkersAdsNear = (ads) => {
+  const adPinIcon = L.icon ({
+    iconUrl: '../img/pin.svg',
+    iconSize: [40,40],
+    iconAnchor: [20,40],
+  });
+
+  const marker = L.marker(
+    ads.location, {
+      icon: adPinIcon,
+    }
   );
 
-  marker.addTo(markerGroup).bindPopup(renderAdNear(createAd(ad)));
+  marker.addTo(markerGroup).bindPopup(renderAdNear(ads));
 };
 
-getSimilarAdNear.forEach((ad) => {
-  createMarker(ad);
-});
+const renderMarkers = (ads) => ads.slice(0,SIMILAR_AD_COUNT).forEach(createMarkersAdsNear);
+
+const clearMap = () => markerGroup.clearLayers();
 
 const mainPinMarker = L.marker(CENTER_TOKYO, {
   draggable: true,
@@ -66,8 +62,13 @@ mainPinMarker.on('moveend', (evt) => {
   getAddressLatLng(points);
 });
 
-const resetAdForm = document.querySelector('.ad-form__reset');
-
-resetAdForm.addEventListener('click', () => {
+const resetCoordinate = () => {
   mainPinMarker.setLatLng(CENTER_TOKYO);
-});
+  map.setView(CENTER_TOKYO);
+};
+
+const resetAddress = () => {
+  addressField.value = `${CENTER_TOKYO.lat},${CENTER_TOKYO.lng}`;
+};
+
+export {renderMarkers,resetCoordinate,resetAddress,clearMap};

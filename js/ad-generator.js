@@ -87,32 +87,33 @@ const renderTextTime = (checkin,checkout) => {
     adNear.querySelector('.popup__text--time').remove();
   }
 };
-
+const hide = (elem) => elem.classList.add('hidden');
 const renderFeatures = (features) => {
-  const featuresContainer = adNear.querySelector('.popup__features');
-  const featuresList = featuresContainer.querySelectorAll('.popup__feature');
+  const popupElements = adNear.querySelectorAll('.popup__feature');
 
-  if (features) {
-    const modifiers = features.map((feature) => `popup__feature--${feature}`);
-    featuresList.forEach((featuresListItem) => {
-      const modifier = featuresListItem.classList[1];
-      if(!modifiers.includes(modifier)) {
-        featuresListItem.remove();
+  popupElements.forEach((element) => hide(element));
+
+  if (!features) {
+    return;
+  }
+
+  features.forEach((feature) => {
+    popupElements.forEach((element) => {
+      if (element.classList.contains(`popup__feature--${feature}`)) {
+        element.classList.remove('hidden');
       }
     });
-  }
-  else {
-    featuresContainer.remove();
-  }
+  });
 };
 
 const renderDescription = (description) => {
   const descriptionAd = adNear.querySelector('.popup__description');
   if (description) {
+    descriptionAd.classList.remove('visually-hidden');
     descriptionAd.textContent = description;
   }
   else {
-    descriptionAd.remove();
+    descriptionAd.classList.add('visually-hidden');
   }
 };
 
@@ -121,12 +122,13 @@ const renderPhotos = (photos) => {
   const photoTemplateElement = photoTemplate.cloneNode(true);
   if (photos) {
     photos.forEach((photo) => {
+      adNear.querySelector('.popup__photos').classList.remove('hidden');
       photoTemplateElement.src = photo;
       adNear.querySelector('.popup__photos').append(photoTemplateElement);
     });
   }
   else {
-    adNear.querySelector('.popup__photos').remove();
+    adNear.querySelector('.popup__photos').classList.add('hidden');
   }
 };
 
@@ -138,7 +140,9 @@ const renderAdNear = ({author,offer}) => {
   renderType(offer.type);
   renderCapacity(offer.guests,offer.rooms);
   renderTextTime(offer.checkin,offer.checkout);
+
   renderFeatures(offer.features);
+
   renderDescription(offer.description);
   renderPhotos(offer.photos);
 
