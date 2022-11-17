@@ -1,15 +1,15 @@
-import {disabledForm,abledForm,getAddressLatLng} from './form.js';
+import {disabledForm,abledForm,getAddressLatLng,disabledFilters} from './form.js';
 import {renderAdNear} from './ad-generator.js';
 
 const CENTER_TOKYO = {
   lat: 35.69034,
   lng: 139.75175,
 };
-const SIMILAR_AD_COUNT = 10;
 
+disabledForm();
+disabledFilters();
 const addressField = document.querySelector('#address');
 addressField.value = `${CENTER_TOKYO.lat},${CENTER_TOKYO.lng}`;
-disabledForm();
 
 const map = L.map('map-canvas')
   .on('load', () => abledForm())
@@ -43,10 +43,10 @@ const createMarkersAdsNear = (ads) => {
     }
   );
 
-  marker.addTo(markerGroup).bindPopup(renderAdNear(ads));
+  marker.addTo(markerGroup).bindPopup(() => renderAdNear(ads));
 };
 
-const renderMarkers = (ads) => ads.slice(0,SIMILAR_AD_COUNT).forEach(createMarkersAdsNear);
+const renderMarkers = (ads) => ads.forEach(createMarkersAdsNear);
 
 const clearMap = () => markerGroup.clearLayers();
 

@@ -14,7 +14,9 @@ const disabledForm = () => {
   for (const element of adForm.children) {
     element.disabled = true;
   }
+};
 
+const disabledFilters = () => {
   mapFilters.classList.add('map__filters--disabled');
   for (const element of mapFilters.children) {
     element.disabled = true;
@@ -26,11 +28,13 @@ const abledForm = () => {
   for (const element of adForm.children) {
     element.disabled = false;
   }
+};
 
+const abledFilters = () => {
   mapFilters.classList.remove('map__filters--disabled');
   for (const element of mapFilters.children) {
     element.disabled = false;
   }
 };
 
-export {disabledForm,abledForm,getAddressLatLng};
+export {disabledForm,abledForm,disabledFilters,abledFilters,getAddressLatLng};
