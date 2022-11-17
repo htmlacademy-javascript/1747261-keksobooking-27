@@ -1,6 +1,7 @@
 import { clearMap } from './map.js';
 const LOW_FILTER_PRICE = 10000;
 const HIGH_FILTER_PRICE = 50000;
+const DEFAULT_VALUE = 'any';
 
 const filtersList = document.querySelector('.map__filters');
 
@@ -29,23 +30,23 @@ const getCheckedFeatures = (features) => {
 
 const filterByType = ({offer}) => {
   const housingTypeInput = filtersList.querySelector('[name="housing-type"]');
-  return offer.type === housingTypeInput.value || housingTypeInput.value === 'any';
+  return offer.type === housingTypeInput.value || housingTypeInput.value === DEFAULT_VALUE;
 };
 
 const filterByPrice = ({offer}) => {
   const housingPriceInput = filtersList.querySelector('[name="housing-price"]');
   const priceRange = getPriceRange(offer.price);
-  return priceRange === housingPriceInput.value || housingPriceInput.value === 'any';
+  return priceRange === housingPriceInput.value || housingPriceInput.value === DEFAULT_VALUE;
 };
 
 const filterByRooms = ({offer}) => {
   const housingRoomsInput = filtersList.querySelector('[name="housing-rooms"]');
-  return offer.rooms === +housingRoomsInput.value || housingRoomsInput.value === 'any';
+  return offer.rooms === +housingRoomsInput.value || housingRoomsInput.value === DEFAULT_VALUE;
 };
 
 const filterByGuests = ({offer}) => {
   const housingGuestsInput = filtersList.querySelector('[name="housing-guests"]');
-  return offer.guests === +housingGuestsInput.value || housingGuestsInput.value === 'any';
+  return offer.guests === +housingGuestsInput.value || housingGuestsInput.value === DEFAULT_VALUE;
 };
 
 const filterByFeatures = ({offer}) => {
