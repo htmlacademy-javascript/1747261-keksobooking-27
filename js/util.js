@@ -1,4 +1,5 @@
 const ALERT_SHOW_TIME = 5000;
+const DEBOUNCE_TIMEOUT_DELAY = 500;
 
 const isEscEvent = (evt) => evt.key === 'Escape';
 const showAlert = (message) => {
@@ -22,11 +23,11 @@ const showAlert = (message) => {
   }, ALERT_SHOW_TIME);
 };
 
-const debounce = (callback, timeoutDelay = 500) => {
+const debounce = (callback) => {
   let timeoutId;
   return (...rest) => {
     clearTimeout(timeoutId);
-    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+    timeoutId = setTimeout(() => callback.apply(this, rest), DEBOUNCE_TIMEOUT_DELAY);
   };
 };
 

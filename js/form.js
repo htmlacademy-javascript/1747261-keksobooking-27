@@ -1,4 +1,5 @@
 const ADDRESS_ROUNDING = 5;
+const FILE_TYPES = ['jpg', 'jpeg', 'png'];
 
 const adForm = document.querySelector('.ad-form');
 const mapFilters = document.querySelector('.map__filters');
@@ -36,5 +37,34 @@ const abledFilters = () => {
     element.disabled = false;
   }
 };
+
+const fileChooserAvatar = adForm.querySelector('.ad-form-header__input');
+const previewAvatar = adForm.querySelector('.ad-form-header__preview img');
+const fileChooserPhotoOfHousing = adForm.querySelector('.ad-form__input');
+const containerPhotoOfHousing = adForm.querySelector('.ad-form__photo');
+
+const checkFileType = (fileName) =>
+  FILE_TYPES.some((it) => fileName.toLowerCase().endsWith(it));
+
+fileChooserAvatar.addEventListener('change', () => {
+  const file = fileChooserAvatar.files[0];
+
+  if (checkFileType(file.name)) {
+    previewAvatar.src = URL.createObjectURL(file);
+  }
+});
+
+fileChooserPhotoOfHousing.addEventListener('change', () => {
+  const file = fileChooserPhotoOfHousing.files[0];
+
+  if (checkFileType(file.name)) {
+    const img = document.createElement('img');
+    containerPhotoOfHousing.innerHTML = '';
+
+    img.src = URL.createObjectURL(file);
+    img.classList.add('ad-form__photo');
+    containerPhotoOfHousing.appendChild(img);
+  }
+});
 
 export {disabledForm,abledForm,disabledFilters,abledFilters,getAddressLatLng};
