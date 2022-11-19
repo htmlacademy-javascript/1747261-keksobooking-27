@@ -1,7 +1,7 @@
 import {disabledForm,abledForm,getAddressLatLng,disabledFilters} from './form.js';
 import {renderAdNear} from './ad-generator.js';
 
-const CENTER_TOKYO = {
+const CenterTokyo = {
   lat: 35.69034,
   lng: 139.75175,
 };
@@ -9,11 +9,11 @@ const CENTER_TOKYO = {
 disabledForm();
 disabledFilters();
 const addressField = document.querySelector('#address');
-addressField.value = `${CENTER_TOKYO.lat},${CENTER_TOKYO.lng}`;
+addressField.value = `${CenterTokyo.lat},${CenterTokyo.lng}`;
 
 const map = L.map('map-canvas')
   .on('load', () => abledForm())
-  .setView(CENTER_TOKYO, 12);
+  .setView(CenterTokyo, 12);
 
 L.tileLayer(
   'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -50,7 +50,7 @@ const renderMarkers = (ads) => ads.forEach(createMarkersAdsNear);
 
 const clearMap = () => markerGroup.clearLayers();
 
-const mainPinMarker = L.marker(CENTER_TOKYO, {
+const mainPinMarker = L.marker(CenterTokyo, {
   draggable: true,
   icon: mainPinIcon,
 });
@@ -63,12 +63,12 @@ mainPinMarker.on('moveend', (evt) => {
 });
 
 const resetCoordinate = () => {
-  mainPinMarker.setLatLng(CENTER_TOKYO);
-  map.setView(CENTER_TOKYO);
+  mainPinMarker.setLatLng(CenterTokyo);
+  map.setView(CenterTokyo);
 };
 
 const resetAddress = () => {
-  addressField.value = `${CENTER_TOKYO.lat},${CENTER_TOKYO.lng}`;
+  addressField.value = `${CenterTokyo.lat},${CenterTokyo.lng}`;
 };
 
 export {renderMarkers,resetCoordinate,resetAddress,clearMap};
