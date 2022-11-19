@@ -38,6 +38,10 @@ const showErrorPopup = () => {
     errorPopup.remove();
     document.removeEventListener('keydown', keydownHandler);
   });
+  errorPopup.addEventListener('click', () => {
+    errorPopup.remove();
+    document.removeEventListener('keydown',keydownHandler);
+  });
 };
 
 export {showSuccessPopup,showErrorPopup};

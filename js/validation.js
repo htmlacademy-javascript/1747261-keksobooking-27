@@ -1,16 +1,17 @@
 import {resetAddress, resetCoordinate} from './map.js';
 import {showErrorPopup, showSuccessPopup} from './popup.js';
 import {sendData} from './api.js';
+import {resetFilters} from './filter.js';
 
 const CAPACITY_NOT_FOR_GUESTS = '0';
 const ROOM_FOR_ONE_GUEST = '1';
-const ROOMS_OPTION = {
+const RoomsOption = {
   '1': ['1'],
   '2': ['2','1'],
   '3': ['3','2','1'],
   '100': ['0']
 };
-const TYPE_OPTION = {
+const TypeOption = {
   bungalow: '0',
   flat: '1000',
   hotel: '3000',
@@ -32,7 +33,7 @@ const roomsField = adForm.querySelector('[name="rooms"]');
 const capacityField = adForm.querySelector('[name="capacity"]');
 
 const validateCapacity = () =>
-  ROOMS_OPTION[roomsField.value].includes(capacityField.value);
+  RoomsOption[roomsField.value].includes(capacityField.value);
 
 const getCapacityErrorMessage = () => {
   if (capacityField.value === CAPACITY_NOT_FOR_GUESTS) {
@@ -86,14 +87,14 @@ sliderElement.noUiSlider.on('update', () => {
 });
 
 const validatePrice = () =>
-  +TYPE_OPTION[typeField.value] < +priceField.value;
+  +TypeOption[typeField.value] < +priceField.value;
 
 const getPriceErrorMessage = () =>
-  `Минимальная цена ${TYPE_OPTION[typeField.value]}`;
+  `Минимальная цена ${TypeOption[typeField.value]}`;
 
 const onTypeChange = () => {
-  priceField.placeholder = TYPE_OPTION[typeField.value];
-  priceField.min = TYPE_OPTION[typeField.value];
+  priceField.placeholder = TypeOption[typeField.value];
+  priceField.min = TypeOption[typeField.value];
   pristine.validate(priceField);
 };
 
@@ -134,6 +135,7 @@ const reset = () => {
   resetForm();
   resetCoordinate();
   resetAddress();
+  resetFilters();
 };
 
 const resetAdForm = document.querySelector('.ad-form__reset');

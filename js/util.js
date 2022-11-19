@@ -1,5 +1,12 @@
 const ALERT_SHOW_TIME = 5000;
 const DEBOUNCE_TIMEOUT_DELAY = 500;
+const TypeHousingLabel = {
+  flat: 'Квартира',
+  bungalow: 'Бунгало',
+  house: 'Дом',
+  palace: 'Двоерц',
+  hotel: 'Отель',
+};
 
 const isEscEvent = (evt) => evt.key === 'Escape';
 const showAlert = (message) => {
@@ -31,4 +38,4 @@ const debounce = (callback) => {
   };
 };
 
-export {isEscEvent,showAlert,debounce};
+export {TypeHousingLabel,isEscEvent,showAlert,debounce};

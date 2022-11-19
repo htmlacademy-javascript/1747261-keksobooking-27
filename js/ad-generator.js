@@ -1,10 +1,4 @@
-const TYPE_HOUSING_LABEL = {
-  flat: 'Квартира',
-  bungalow: 'Бунгало',
-  house: 'Дом',
-  palace: 'Двоерц',
-  hotel: 'Отель',
-};
+import {TypeHousingLabel} from './util.js';
 
 const similarAdNearTemplate = document.querySelector('#card').content.querySelector('.popup');
 const adNear = similarAdNearTemplate.cloneNode(true);
@@ -47,7 +41,7 @@ const renderPrice = (price) => {
 
 const renderType = (type) => {
   if (type) {
-    adNear.querySelector('.popup__type').textContent = TYPE_HOUSING_LABEL[type];
+    adNear.querySelector('.popup__type').textContent = TypeHousingLabel[type];
   }
   else {
     adNear.querySelector('.popup__type').remove();

@@ -1,9 +1,13 @@
-import { clearMap } from './map.js';
+import {clearMap} from './map.js';
+
 const LOW_FILTER_PRICE = 10000;
 const HIGH_FILTER_PRICE = 50000;
+const SIMILAR_AD_COUNT = 10;
 const DEFAULT_VALUE = 'any';
 
 const filtersList = document.querySelector('.map__filters');
+
+const resetFilters = () => filtersList.reset();
 
 const getPriceRange = (value) => {
   let priceRange;
@@ -55,12 +59,25 @@ const filterByFeatures = ({offer}) => {
   return checkedFeatures.length === 0 || offer.features && checkedFeatures.every((element) => offer.features.includes(element));
 };
 
-const filterAd = (ad) =>
-  filterByType(ad)
-  && filterByPrice(ad)
-  && filterByRooms(ad)
-  && filterByGuests(ad)
-  && filterByFeatures(ad);
+const getFilteredAds = (ads) => {
+  const filterAds = [];
+  for (const ad of ads) {
+    if (filterAds.length >= SIMILAR_AD_COUNT) {
+      break;
+    }
+    if (
+      filterByType(ad) &&
+      filterByPrice(ad) &&
+      filterByRooms(ad) &&
+      filterByGuests(ad) &&
+      filterByFeatures(ad)
+    ) {
+      filterAds.push(ad);
+    }
+  }
+
+  return filterAds;
+};
 
 const setChangeEventOnFilter = (cb) => {
   filtersList.addEventListener('change', () => {
@@ -69,4 +86,4 @@ const setChangeEventOnFilter = (cb) => {
   });
 };
 
-export {filterAd,setChangeEventOnFilter};
+export {resetFilters,getFilteredAds,setChangeEventOnFilter,SIMILAR_AD_COUNT};
