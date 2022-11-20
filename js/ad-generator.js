@@ -3,48 +3,21 @@ import {TypeHousingLabel} from './util.js';
 const similarAdNearTemplate = document.querySelector('#card').content.querySelector('.popup');
 const adNear = similarAdNearTemplate.cloneNode(true);
 
+const renderKeyTextContent = (key,classElement,keyData) => {
+  if (key) {
+    adNear.querySelector(classElement).textContent = keyData;
+  }
+  else {
+    classElement.remove();
+  }
+};
+
 const renderAvatar = (avatar) => {
   if (avatar) {
     adNear.querySelector('.popup__avatar').src = avatar;
   }
   else {
     adNear.querySelector('.popup__avatar').remove();
-  }
-};
-
-const renderTitle = (title) => {
-  if (title) {
-    adNear.querySelector('.popup__title').textContent = title;
-  }
-  else {
-    adNear.querySelector('.popup__title').remove();
-  }
-};
-
-const renderAddress = (address) => {
-  if(address) {
-    adNear.querySelector('.popup__text--address').textContent = address;
-  }
-  else {
-    adNear.querySelector('.popup__text--address').remove();
-  }
-};
-
-const renderPrice = (price) => {
-  if (price) {
-    adNear.querySelector('[data-price]').textContent = price;
-  }
-  else {
-    adNear.querySelector('.popup__text--price').remove();
-  }
-};
-
-const renderType = (type) => {
-  if (type) {
-    adNear.querySelector('.popup__type').textContent = TypeHousingLabel[type];
-  }
-  else {
-    adNear.querySelector('.popup__type').remove();
   }
 };
 
@@ -128,10 +101,10 @@ const renderPhotos = (photos) => {
 
 const renderAdNear = ({author,offer}) => {
   renderAvatar(author.avatar);
-  renderTitle(offer.title);
-  renderAddress(offer.address);
-  renderPrice(offer.price);
-  renderType(offer.type);
+  renderKeyTextContent(offer.title,'.popup__title',offer.title);
+  renderKeyTextContent(offer.address,'.popup__text--address',offer.address);
+  renderKeyTextContent(offer.price,'[data-price]',offer.price);
+  renderKeyTextContent(offer.type,'.popup__type',TypeHousingLabel[offer.type]);
   renderCapacity(offer.guests,offer.rooms);
   renderTextTime(offer.checkin,offer.checkout);
 

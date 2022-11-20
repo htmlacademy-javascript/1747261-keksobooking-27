@@ -1,4 +1,5 @@
-import {clearMap} from './map.js';
+import {clearMap, renderMarkers} from './map.js';
+
 
 const LOW_FILTER_PRICE = 10000;
 const HIGH_FILTER_PRICE = 50000;
@@ -7,7 +8,11 @@ const DEFAULT_VALUE = 'any';
 
 const filtersList = document.querySelector('.map__filters');
 
-const resetFilters = () => filtersList.reset();
+const resetFilters = (ads) => {
+  filtersList.reset();
+  clearMap();
+  renderMarkers(ads.slice(0,SIMILAR_AD_COUNT));
+};
 
 const getPriceRange = (value) => {
   let priceRange;
@@ -44,12 +49,12 @@ const filterByPrice = ({offer}) => {
 };
 
 const filterByRooms = ({offer}) => {
-  const housingRoomsInput = filtersList.querySelector('[name="housing-rooms"]');
+  const housingRoomsInput = filtersList.querySelector('[name="housing-guests"]');
   return offer.rooms === +housingRoomsInput.value || housingRoomsInput.value === DEFAULT_VALUE;
 };
 
 const filterByGuests = ({offer}) => {
-  const housingGuestsInput = filtersList.querySelector('[name="housing-guests"]');
+  const housingGuestsInput = filtersList.querySelector('[name="housing-rooms"]');
   return offer.guests === +housingGuestsInput.value || housingGuestsInput.value === DEFAULT_VALUE;
 };
 
