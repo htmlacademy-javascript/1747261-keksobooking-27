@@ -1,4 +1,4 @@
-import {disabledForm,abledForm,getAddressLatLng,disabledFilters} from './form.js';
+import {disableForm,getAddressLatLng,disableFilters} from './form.js';
 import {renderAdNear} from './ad-generator.js';
 
 const CenterTokyo = {
@@ -6,15 +6,12 @@ const CenterTokyo = {
   lng: 139.75175,
 };
 
-disabledForm();
-disabledFilters();
+disableForm();
+disableFilters();
 const addressField = document.querySelector('#address');
 addressField.value = `${CenterTokyo.lat},${CenterTokyo.lng}`;
 
-const map = L.map('map-canvas')
-  .on('load', () => abledForm())
-  .setView(CenterTokyo, 12);
-
+const map = L.map('map-canvas');
 L.tileLayer(
   'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
   {
@@ -71,4 +68,4 @@ const resetAddress = () => {
   addressField.value = `${CenterTokyo.lat},${CenterTokyo.lng}`;
 };
 
-export {renderMarkers,resetCoordinate,resetAddress,clearMap};
+export {CenterTokyo,map,renderMarkers,resetCoordinate,resetAddress,clearMap};

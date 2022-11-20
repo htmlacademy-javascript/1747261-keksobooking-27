@@ -2,6 +2,7 @@ import {resetAddress, resetCoordinate} from './map.js';
 import {showErrorPopup, showSuccessPopup} from './popup.js';
 import {sendData} from './api.js';
 import {resetFilters} from './filter.js';
+import {resetPreview} from './form.js';
 
 const CAPACITY_NOT_FOR_GUESTS = '0';
 const ROOM_FOR_ONE_GUEST = '1';
@@ -73,12 +74,8 @@ noUiSlider.create(sliderElement, {
   step: 1,
   connect: 'lower',
   format: {
-    to: function (value) {
-      return value.toFixed(0);
-    },
-    from: function (value) {
-      return parseFloat(value);
-    },
+    to: (value) => value.toFixed(0),
+    from: (value) => parseFloat(value),
   },
 });
 
@@ -87,7 +84,7 @@ sliderElement.noUiSlider.on('update', () => {
 });
 
 const validatePrice = () =>
-  +TypeOption[typeField.value] < +priceField.value;
+  +TypeOption[typeField.value] <= +priceField.value;
 
 const getPriceErrorMessage = () =>
   `Минимальная цена ${TypeOption[typeField.value]}`;
@@ -129,25 +126,26 @@ const unblockSubmitButton = () => {
 const resetForm = () => {
   adForm.reset();
   sliderElement.noUiSlider.set(0);
+  resetPreview();
 };
 
-const reset = () => {
+const reset = (ads) => {
   resetForm();
   resetCoordinate();
   resetAddress();
-  resetFilters();
+  resetFilters(ads);
 };
 
 const resetAdForm = document.querySelector('.ad-form__reset');
 
-const setResetButtonClick = () => {
+const setResetButtonClick = (ads) => {
   resetAdForm.addEventListener('click', (evt) => {
     evt.preventDefault();
-    reset();
+    reset(ads);
   });
 };
 
-const setUserFormSubmit = () => {
+const setUserFormSubmit = (ads) => {
   adForm.addEventListener('submit',(evt) => {
     evt.preventDefault();
 
@@ -158,7 +156,7 @@ const setUserFormSubmit = () => {
         () => {
           showSuccessPopup();
           unblockSubmitButton();
-          reset();
+          reset(ads);
         },
         () => {
           showErrorPopup();

@@ -1,5 +1,6 @@
 const ADDRESS_ROUNDING = 5;
 const FILE_TYPES = ['jpg', 'jpeg', 'png'];
+const DEFAULT_AVATAR_SRC = 'img/muffin-grey.svg';
 
 const adForm = document.querySelector('.ad-form');
 const mapFilters = document.querySelector('.map__filters');
@@ -10,28 +11,28 @@ const getAddressLatLng = (latLng) => {
   addressField.readOnly = true;
 };
 
-const disabledForm = () => {
+const disableForm = () => {
   adForm.classList.add('ad-form--disabled');
   for (const element of adForm.children) {
     element.disabled = true;
   }
 };
 
-const disabledFilters = () => {
+const disableFilters = () => {
   mapFilters.classList.add('map__filters--disabled');
   for (const element of mapFilters.children) {
     element.disabled = true;
   }
 };
 
-const abledForm = () => {
+const enableForm = () => {
   adForm.classList.remove('ad-form--disabled');
   for (const element of adForm.children) {
     element.disabled = false;
   }
 };
 
-const abledFilters = () => {
+const enableFilters = () => {
   mapFilters.classList.remove('map__filters--disabled');
   for (const element of mapFilters.children) {
     element.disabled = false;
@@ -67,4 +68,9 @@ fileChooserPhotoOfHousing.addEventListener('change', () => {
   }
 });
 
-export {disabledForm,abledForm,disabledFilters,abledFilters,getAddressLatLng};
+const resetPreview = () => {
+  containerPhotoOfHousing.innerHTML = '';
+  previewAvatar.src = DEFAULT_AVATAR_SRC;
+};
+
+export {disableForm,enableForm,disableFilters,enableFilters,getAddressLatLng,resetPreview};
